@@ -14,20 +14,15 @@ import { NotImplementedError } from '../extensions/index.js';
 export default function sortByHeight(arr) {
   // throw new NotImplementedError('Not implemented');
   // remove line with error and write your code here
-  const arrForNumber = [];
-  const arrSort = arr;
-  for (let index = 0; index < arr.length; index++) {
-    if (arr[index] !== -1) {
-      arrForNumber.push(arr[index]);
-    }
-  }
-  arrForNumber = arrForNumber.sort((a, b) => a - b);
+  const arrForNumber = arr.filter(i => i !== -1).sort((a, b) => a - b);
 
-  let a = o;
-  for (let i = 0; i < arrSort.length; i++) {
+  let a = 0;
+  const arrSort = [];
+  for (let i = 0; i < arr.length; i++) {
     if (arr[i] !== -1) {
       arrSort[i] = arrForNumber[a];
-    }
+      a++
+    } else arrSort[i] = -1;
   }
   return arrSort;
 }
