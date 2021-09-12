@@ -19,23 +19,26 @@ export default function transform(arr) {
   if (!Array.isArray(arr)) throw new Error ("'arr' parameter must be an instance of the Array!");
   if (arr.length === 0) return [];
 
-  let result = arr.filter(i => i != '--discard-next' && i != '--discard-prev' && i != '--double-next' && i != '--double-prev');
+  let result = [];
 
   for (let index = 0; index < arr.length; index++) {
-    if (arr[index - 1] === '--discard-next') {
-      result.pop(arr[index]);
-
-    } else if (arr[index + 1] === '--discard-prev') {
-      result.pop(arr[index]);
-
-    }
-    if (arr[index + 1] === '--double-next') {
-      result.push(arr[index]);
-
-    } else if (arr[index - 1] === '--double-prev') {
-      result.push(arr[index]);
-
-    }
-  }
-  return result;
+    if (arr[index] === '--discard-next') {
+      if (index !== arr.length - 1) {
+        index += 1;
+      }
+    } else if (arr[index] === '--discard-prev') {
+      if (index !== 0 && arr[index -2] !== '--discard-next') {
+        result.pop();
+      }
+    } else if (arr[index] === '--double-next') {
+      if (index !== arr.length - 1) {
+        result.push(arr[index + 1]);
+      }
+    } else if (arr[index] === '--double-prev') {
+      if (index !== 0 && arr[index - 2] !== '--discard-next') {
+        result.push(arr[index - 1]);
+      }
+    } else result.push(arr[index]);
+}
+return result;
 }
