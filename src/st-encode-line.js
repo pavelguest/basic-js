@@ -16,10 +16,12 @@ export default function encodeLine(str) {
   let sum = 1;
   let n = '';
   for (let index = 0; index < str.length; index++) {
-    if (str[index] === str[index - 1]) {
+    if (str[index] === str[index + 1]) {
       sum++
     } else {
-      n = sum + str[index - 1];
+      if (sum === 1) {
+        n += str[index];
+      } else n += sum + str[index];
       sum = 1;
     }
   } return n;
